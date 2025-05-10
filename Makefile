@@ -6,7 +6,7 @@
 #    By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 16:16:34 by mgrandia          #+#    #+#              #
-#    Updated: 2025/05/10 19:22:29 by mgrandia         ###   ########.fr        #
+#    Updated: 2025/05/10 20:02:49 by mgrandia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,13 @@ AR = ar rcs
 RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror -g
+
+GREEN = \033[38;5;121m
+RED = \033[0;31m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+BOLD = \033[1m
+RESET = \033[0m
 
 DIR_INC = includes/ 
 
@@ -52,6 +59,12 @@ all: $(NAME)
 
 $(NAME): $(DIR_OBJS) $(OBJS_LIBFT) $(OBJS_PRINTF) $(OBJS_GNL)
 	@$(AR) $(NAME) $(OBJS_LIBFT) $(OBJS_PRINTF) $(OBJS_GNL)	
+	@echo "$(GREEN)$(BOLD)✓ Librería $(NAME) creada exitosamente!$(RESET)"
+	@echo "$(BLUE)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
+	@echo "$(PURPLE)➤ Archivos de libft compilados: $(words $(SRC_LIBFT))$(RESET)"
+	@echo "$(PURPLE)➤ Archivos de printf compilados: $(words $(SRC_PRINTF))$(RESET)"
+	@echo "$(PURPLE)➤ Archivos de gnl compilados: $(words $(SRC_GNL))$(RESET)"
+	@echo "$(BLUE)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
 
 $(DIR_OBJS):
 	@mkdir -p $(DIR_OBJS)
