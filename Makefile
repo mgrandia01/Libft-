@@ -6,7 +6,7 @@
 #    By: mgrandia <mgrandia@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/06 16:16:34 by mgrandia          #+#    #+#              #
-#    Updated: 2025/05/10 20:51:55 by mgrandia         ###   ########.fr        #
+#    Updated: 2025/05/11 13:05:54 by mgrandia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,10 @@ RM = rm -f
 
 FLAGS = -Wall -Wextra -Werror -g
 
-GREEN = \033[38;5;121m
+GREEN = \033[38;5;114m   
+SLATE = \033[38;5;145m 
+TEAL = \033[38;5;123m 
 RED = \033[0;31m
-BLUE = \033[0;34m
-PURPLE = \033[0;35m
-BOLD = \033[1m
 RESET = \033[0m
 
 DIR_INC = includes/ 
@@ -59,32 +58,42 @@ all: $(NAME)
 
 $(NAME): $(DIR_OBJS) $(OBJS_LIBFT) $(OBJS_PRINTF) $(OBJS_GNL)
 	@$(AR) $(NAME) $(OBJS_LIBFT) $(OBJS_PRINTF) $(OBJS_GNL)	
-	@echo "$(GREEN)$(BOLD)✓ Librería $(NAME) creada exitosamente!$(RESET)"
-	@echo "$(BLUE)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
-	@echo "$(PURPLE)➤ Archivos de libft compilados: $(words $(SRC_LIBFT))$(RESET)"
-	@echo "$(PURPLE)➤ Archivos de printf compilados: $(words $(SRC_PRINTF))$(RESET)"
-	@echo "$(PURPLE)➤ Archivos de gnl compilados: $(words $(SRC_GNL))$(RESET)"
-	@echo "$(BLUE)━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
+	@echo
+	@echo "$(GREEN)$(BOLD)✅ Library $(NAME) successfully created!$(RESET)"
+	@echo "$(TEAL) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
+	@echo "$(SLATE)  ➤ Libft files compiled: $(words $(SRC_LIBFT))$(RESET)"
+	@echo "$(SLATE)  ➤ Printf files compiled: $(words $(SRC_PRINTF))$(RESET)"
+	@echo "$(SLATE)  ➤ Gnl files compiled: $(words $(SRC_GNL))$(RESET)"
+	@echo "$(TEAL) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$(RESET)"
+	@echo
 
 $(DIR_OBJS):
 	@mkdir -p $(DIR_OBJS)
 
 $(DIR_OBJS)libft_%.o: $(DIR_LIBFT)%.c Makefile  includes/libft.h
+	@echo "$(SLATE) ⚙️  Compiling $(@F:libft_%.o=%.c)..."
 	@$(CC) $(FLAGS) -MD -I$(DIR_INC) -c $< -o $@
 
 $(DIR_OBJS)printf_%.o: $(DIR_PRINTF)%.c Makefile includes/ft_printf.h
+	@echo "$(SLATE) ⚙️  Compiling $(@F:printf_%.o=%.c)..."
 	@$(CC) $(FLAGS) -MD -I$(DIR_INC) -c $< -o $@
 
 $(DIR_OBJS)gnl_%.o: $(DIR_GNL)%.c Makefile includes/get_next_line.h
+	@echo "$(SLATE) ⚙️  Compiling $(@F:gnl_%.o=%.c)..."
 	@$(CC) $(FLAGS) -MD -I$(DIR_INC) -c $< -o $@
 	
 clean:
+	@echo "$(SLATE) 🧹 Removing object files at libft..."
 	@$(RM) -r $(DIR_OBJS)
+	@echo "$(SLATE) ✅ Object files removed!"
 
 fclean: clean
+	@echo "$(SLATE) 🗑️  Removing library..."
 	@$(RM) $(NAME)
+	@echo "$(SLATE) ✅ fclean complete!"
 
 re: fclean all
+	@echo "$(SLATE) 🎉 Full recompilation complete!"
 
 .PHONY: all clean fclean re
 -include: $(DEP_FILES)
